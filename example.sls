@@ -1,6 +1,6 @@
 {% load_yaml as versions -%}
 # renovate: datasource=custom.example depName=example
-- '1.1'
+- '1.0.1'
 - '1.0'
 {% endload -%}
 
