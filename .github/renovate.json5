@@ -2,10 +2,42 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "enabledManagers": [
     "copier",
+    "custom.regex",
     "git-submodules",
   ],
   "extends": [
     "config:recommended",
+  ],
+  "customDatasources": {
+      "example": {
+        "defaultRegistryUrlTemplate": "https://f000.backblazeb2.com/file/techneg-repo/version.txt",
+        "format": "plain",
+      },
+      "firefox": {
+        "defaultRegistryUrlTemplate": "https://product-details.mozilla.org/1.0/firefox_versions.json",
+        "transformTemplates": [
+          "{\"releases\": [{ \"version\": $.{{packageName}} }] }"
+        ],
+      },
+      "putty": {
+        "defaultRegistryUrlTemplate": "https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html",
+        "format": "html",
+      },
+      "vlc": {
+        "defaultRegistryUrlTemplate": "https://get.videolan.org/vlc/last/win64/",
+        "format": "html",
+      },
+  },
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": ["\\.sls$"],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-.]+?) depName=(?<depName>\\S+?)(?: packageName=(?<packageName>\\S+?))?\\s+- [\"']?(?<currentValue>.+?)[\"']?\\s",
+      ],
+      "autoReplaceStringTemplate": "# renovate: datasource={{{datasource}}} depName={{{depName}}}{{#unless (equals depName packageName)}} packageName={{{packageName}}}{{/unless}}\n- '{{{newValue}}}'\n- '{{{currentValue}}}'\n",
+      "versioningTemplate": "loose",
+    },
   ],
   "git-submodules": {
     "enabled": true
