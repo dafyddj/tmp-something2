@@ -1,0 +1,20 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": [
+    "copier",
+    "git-submodules",
+  ],
+  "extends": [
+    "config:recommended",
+  ],
+  "git-submodules": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["git-submodules"],
+      "automerge": true,
+    },
+  ],
+  "platformAutomerge": false,
+}
