@@ -7,6 +7,8 @@
 - '1.0'
 {% endload -%}
 
+# add a comment to test status checks
+
 example:
   {% for version in versions -%}
   '{{ version }}':
