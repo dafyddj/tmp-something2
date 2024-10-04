@@ -108,7 +108,7 @@ jobs:
         run: |
           & "C:\Program Files\Salt Project\Salt\Scripts\python.exe" .\.cicd\tests.py ${{ join(fromJSON(steps.changed-files.outputs.sls_files), ' ') }}
   results:
-#    name: Collect results
+    name: Collect results
 #    needs:
 #      - pre-commit
 #      - refresh_db
@@ -120,5 +120,6 @@ jobs:
       - name: GitHub Checks
         uses: poseidon/wait-for-status-checks@v0.4.1
         with:
+          ignore: Collect results
           token: ${{ secrets.GITHUB_TOKEN }}
       - run: echo "Tests succeeded!"
