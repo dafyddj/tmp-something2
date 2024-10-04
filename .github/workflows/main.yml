@@ -109,10 +109,11 @@ jobs:
           & "C:\Program Files\Salt Project\Salt\Scripts\python.exe" .\.cicd\tests.py ${{ join(fromJSON(steps.changed-files.outputs.sls_files), ' ') }}
   results:
     name: Collect results
-#    needs:
-#      - pre-commit
-#      - refresh_db
-#      - test
+    if: always()
+    needs:
+      - pre-commit
+      - refresh_db
+      - test
     permissions:
       checks: read
     runs-on: ubuntu-latest
